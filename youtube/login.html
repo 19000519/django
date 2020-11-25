@@ -1,0 +1,8 @@
+Login view
+<br>
+<form action = "login" method = 'POST'>
+    {% csrf_token %}
+    {{ form }}
+
+    <br><input type = "submit" value = "Log In!"> 
+</form>

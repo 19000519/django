@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from youtube.views import Index, NewVideo
+from youtube.views import HomeView, NewVideo, LoginView
 import debug_toolbar
 from django.conf import settings
 from django.urls import include, path
@@ -25,7 +25,8 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    path('index', Index.as_view()),
+    path('', HomeView.as_view()),
+    path('LoginView', LoginView.as_view()),
     path('new_video', NewVideo.as_view())
 ]
 
