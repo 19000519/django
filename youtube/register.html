@@ -1,3 +1,10 @@
+{% extends "parent.html" %}
+
+{% block title %}
+create an account
+{% endblock %}
+
+{% block body %}
 <h1>Create a "youtube clone with python" Account</h1><br>
 
 <form action = "register" method = "POST">
@@ -5,3 +12,4 @@
     {{ form }}
     <br><input type = 'submit' value = 'Create Account!'> 
 </form>
+{% endblock %}
