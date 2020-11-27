@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import HttpResponse, View, HttpResponse
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, NewVideoForm
 from youtube.models import Video
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -40,6 +40,8 @@ class RegisterView(View):
     template_name = 'register.html'
 
     def get(self, request):
+        if request.user.is_authenticated:
+               return HttpResponseRedirect('/') 
         form = RegisterForm()
         return render(request, self.template_name, {'form': form})
 
@@ -62,8 +64,8 @@ class NewVideo(View):
     template_name = 'new_video.html'
 
     def get(self, request):
-        variableA = 'New Video'
-        return render(request, self.template_name, {'variableA' : variableA} )
+        form = NewVideoForm()
+        return render(request, self.template_name, {'form' : form} )
     
     def post(self, request):
         return HttpResponse('This is Index view. POST Request.')

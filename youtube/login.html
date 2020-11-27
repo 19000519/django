@@ -9,6 +9,7 @@ Login into your account
 <form action = "login" method = "POST">
     {% csrf_token %}
     {{ form }}
-    <br><input type = 'submit' value = 'Log In!'> 
+    <br>
+    <button type="button" class="btn btn-primary">Log in</button>
 </form>
 {% endblock %}

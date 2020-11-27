@@ -10,6 +10,7 @@ create an account
 <form action = "register" method = "POST">
     {% csrf_token %}
     {{ form }}
-    <br><input type = 'submit' value = 'Create Account!'> 
+    <br>
+    <button type="button" class="btn btn-primary">Create Account</button>
 </form>
 {% endblock %}
