@@ -2,9 +2,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import HttpResponse, View, HttpResponse
 from .forms import LoginForm, RegisterForm, NewVideoForm
-from youtube.models import Video
+from youtube.models import Video, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from .models import Video, Comment
 # Create your views here.
 class HomeView(View):
     template_name = 'Home.html'
@@ -64,8 +65,26 @@ class NewVideo(View):
     template_name = 'new_video.html'
 
     def get(self, request):
+        if request.user.is_authenticated == False:
+               return HttpResponseRedirect('/') 
+      
         form = NewVideoForm()
         return render(request, self.template_name, {'form' : form} )
     
     def post(self, request):
-        return HttpResponse('This is Index view. POST Request.')
+        #pass filled out HTML- from view to NewVideoForm()
+        form = NewVideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            #Create a video entry
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            file = form.cleaned_data['file']
+            print(title)
+            new_video = Video(title = title,
+                             description = description, 
+                             user= request.user,
+                             path = file)
+            new_video.save()
+            return HttpResponseRedirect('/video/{}'.format(new_video.id))
+        else:
+            return HttpResponse("form invalid, try again")
